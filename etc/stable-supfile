@@ -1,0 +1,15 @@
+*default host=cvsup3.ua.FreeBSD.org
+*default base=/var/db
+*default prefix=/usr
+# Качаем исходные тексты 6.2 ветки. Если необходимо 5, 4, 3 или 2.2, то меняем на
+# "RELENG_5", "RELENG_4", "RELENG_3", "RELENG_2_2" соответственно.
+# Если не указывать версию в ветке (RELENG_6), то будут скачиваться исходники
+# последней доступной версии, которая не обязательно может быть STABLE
+# (на момент написания статьи это 6.2RC2).
+*default release=cvs tag=RELENG_7_2
+*default delete use-rel-suffix
+# Включаем сжатие трафика
+*default compress
+# Качаем полное дерево исходников
+src-all
+

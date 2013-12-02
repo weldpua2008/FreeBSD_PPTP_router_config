@@ -1,0 +1,31 @@
+# /etc/crontab - root's crontab for FreeBSD
+#
+# $FreeBSD: src/etc/crontab,v 1.32.32.1 2008/11/25 02:59:29 kensmith Exp $
+#
+SHELL=/bin/sh
+PATH=/etc:/bin:/sbin:/usr/bin:/usr/sbin
+HOME=/var/log
+#
+#minute	hour	mday	month	wday	who	command
+#
+*/5	*	*	*	*	root	/usr/libexec/atrun
+#
+# Save some entropy so that /dev/random can re-seed on boot.
+*/11	*	*	*	*	operator /usr/libexec/save-entropy
+#
+# Rotate log files every hour, if necessary.
+0	*	*	*	*	root	newsyslog
+#
+# Perform daily/weekly/monthly maintenance.
+1	3	*	*	*	root	periodic daily
+15	4	*	*	6	root	periodic weekly
+30	5	1	*	*	root	periodic monthly
+#
+# Adjust the time zone if the CMOS clock keeps local time, as opposed to
+# UTC time.  See adjkerntz(8) for details.
+1,31	0-5	*	*	*	root	adjkerntz -a
+*/11     *   *   *   *   root    /home/user/speed/mpd_cron.php
+#*/1     *   *   *   *   root    /home/user/speed/calc_speed.php
+*/1     *   *   *   *   root    /usr/local/bin/rsync --update --verbose --password-file=/usr/local/etc/rsyncd.crt backuproot@10.198.198.2::speed_php/set.php /home/user/speed/ >> /var/log/rsync.log
+*/1     *   *   *   *   root    /usr/local/bin/rsync --update --verbose --password-file=/usr/local/etc/rsyncd.crt backuproot@10.198.198.2::speed_php/last_count /home/user/speed/ >> /var/log/rsync.log
+

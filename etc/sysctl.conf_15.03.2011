@@ -1,0 +1,77 @@
+# $FreeBSD: src/etc/sysctl.conf,v 1.8 2003/03/13 18:43:50 mux Exp $
+#
+#  This file is read when going to multi-user and its contents piped thru
+#  ``sysctl'' to adjust kernel values.  ``man 5 sysctl.conf'' for details.
+#
+
+# Uncomment this to prevent users from seeing information about processes that
+# are being run under another UID.
+security.bsd.see_other_uids=0
+security.bsd.see_other_gids=0
+
+#kern.ipc.somaxconn=1024
+net.inet.tcp.blackhole=2
+net.inet.udp.blackhole=1
+net.inet.icmp.drop_redirect=1
+net.inet.icmp.log_redirect=1
+
+net.inet.tcp.sendspace=65536
+net.inet.tcp.recvspace=65536
+net.link.ether.inet.max_age=1200
+net.inet.ip.sourceroute=0
+net.inet.ip.accept_sourceroute=0
+net.inet.icmp.bmcastecho=0
+net.inet.icmp.maskrepl=0
+net.inet.icmp.icmplim=10000
+net.inet.tcp.msl=7500
+
+
+
+kern.ipc.somaxconn=32768
+#net.inet.icmp.icmplim=1000
+#net.inet.tcp.msl=7500
+
+net.inet.ip.ttl=128
+#net.graph.recvspace=524288
+#net.graph.maxdgram=524288
+#net.inet.ip.fw.autoinc_step=1
+#net.inet.ip.random_id=1
+security.bsd.see_other_uids=0
+security.bsd.see_other_gids=0
+
+net.inet.ip.ttl=128
+
+net.inet.icmp.bmcastecho=0
+
+#22 02 09
+kern.maxfiles=128000
+kern.maxfilesperproc=65000
+kern.ipc.maxsockets=204800
+kern.ipc.nmbclusters=65536
+net.inet.ip.portrange.first=1024
+net.inet.ip.portrange.last=65534
+net.inet.ip.portrange.randomized=0
+
+#17 03 09
+net.inet.ip.fastforwarding=1
+
+#23 03 09
+net.inet6.ip6.forwarding=1
+net.inet.ip.redirect=1
+
+#24 03 09
+net.inet.ip.fw.one_pass=0
+net.inet.ip.dummynet.io_fast=1
+
+net.inet.ip.dummynet.hash_size=10240
+net.inet.ip.dummynet.max_chain_len=32
+
+#2.10.2009
+net.graph.recvspace=128000
+net.graph.maxdgram=128000
+
+#19.10.2009
+#solv ipfw: install_state: Too many dynamic rules
+net.inet.ip.fw.dyn_buckets=2048
+
+net.inet.ip.fw.dyn_max=16384

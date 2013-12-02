@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mman>
+        <global>
+                <general>
+                        <ctimeout>3</ctimeout>
+                        <timeout>60</timeout>
+                        <keeptimeout>120</keeptimeout>
+                        <maxbuffer>10000000</maxbuffer>
+                        <tempdir>/tmp</tempdir>
+                        <linelength>100</linelength>
+                        <cportrange>80,443</cportrange>
+                        <poolsize>32</poolsize>
+                        <pooltimeout>60</pooltimeout>
+                        <compressout>false</compressout>
+                        <compressin>false</compressin>
+                        <encodemime>^text/</encodemime>
+                </general>
+                <ftp>
+                        <passive>true</passive>
+                        <timeout>15</timeout>
+                        <anonlogin>anonymous</anonlogin>
+                        <anonpass>noone@nowhere.com</anonpass>
+                        <sortorder>ascending</sortorder>
+                        <sortfield>name</sortfield>
+                </ftp>
+                <dnsbl>
+                        <enabled>false</enabled>
+                        <domain>in.dnsbl.org</domain>
+                        <badips>127.0.0.1,127.0.0.2,127.0.0.3,127.0.0.4,127.0.0.5</badips>
+                </dnsbl>
+                <prefetch>
+                        <enabled>false</enabled>
+                </prefetch>
+        </global>
+
+        <network>
+                <listen>
+                        <enabled>true</enabled>
+                        <port>3128</port>
+                        <ip>127.0.0.1</ip>
+                </listen>
+        </network>
+
+        <profiles>
+                <item>
+                        <enabled>true</enabled>
+                        <comment>Mask referrer in javascripts, and make it appear like the webpage was reloaded to the server</comment>
+                        <addprofiles>mask-referrer</addprofiles>
+                </item>
+                <item>
+                        <enabled>true</enabled>
+                        <comment>Workaround for a bug in apache 1.3 when downloading tar.gz files from clients that don&apos;t support gzip encoding</comment>
+                        <file>.*\.tar\.gz$</file>
+                        <addprofiles>apache-targz-workaround</addprofiles>
+                </item>
+        </profiles>
+
+        <templates>
+        </templates>
+
+        <external>
+                <enabled>true</enabled>
+                <item>
+                        <enabled>true</enabled>
+                        <comment>torrent</comment>
+                        <mime>application\/x-bittorrent</mime>
+                        <exec>/home/torrents/mypatcher.pl</exec>
+                        <type>file</type>
+                </item>
+        </external>
+
+        <access>
+                <policy>deny</policy>
+                <allow>
+                        <enabled>true</enabled>
+                        <comment>localhost</comment>
+                        <ip>91.215.136.1,178.165.24.231</ip>
+                        <pamauth>false</pamauth>
+                        <access>config,proxy,connect,http,transparent,bypass,urlcommand</access>
+                </allow>
+                <allow>
+                        <enabled>true</enabled>
+                        <comment>homenet</comment>
+                        <ip>10\.\d+\.\d+\.\d+</ip>
+                        <pamauth>false</pamauth>
+                        <access>,proxy,connect,http,transparent,,</access>
+                </allow>
+
+                <allow>
+                        <enabled>true</enabled>
+                        <comment>homenet</comment>
+                        <ip>91\.\d+\.\d+\.\d+</ip>
+                        <pamauth>false</pamauth>
+                        <access>,proxy,connect,http,transparent,,</access>
+                </allow>
+
+                <allow>
+                        <enabled>true</enabled>
+                        <comment>server</comment>
+                        <ip>d+\.\d+\.\d+\.\d+</ip>
+                        <pamauth>false</pamauth>
+                        <access>config,proxy,connect,http,transparent,bypass,urlcommand</access>
+                </allow>
+        </access>
+
+        <cache>
+                <enabled>true</enabled>
+                <violaterfc>true</violaterfc>
+                <maxmemsize>10485760</maxmemsize>
+                <memextra>1048576</memextra>
+                <maxage>2592000</maxage>
+                <validate>1800</validate>
+                <lmfactor>10</lmfactor>
+                <maxsize>2097152</maxsize>
+                <minage>3600</minage>
+                <minsize>0</minsize>
+                <maxwaitsize>51200</maxwaitsize>
+                <prefetchwindow>30</prefetchwindow>
+                <icpport>0</icpport>
+                <icptimeout>1000</icptimeout>
+                <sbalancemethod>fillsize</sbalancemethod>
+                <store>
+                        <enabled>true</enabled>
+                        <path>/var/cache/mman</path>
+                        <maxdisksize>1048576000</maxdisksize>
+                        <diskextra>10485760</diskextra>
+                </store>
+        </cache>
+
+        <header>
+                <enabled>false</enabled>
+        </header>
+
+        <cookies>
+                <enabled>false</enabled>
+        </cookies>
+
+        <redirect>
+                <enabled>false</enabled>
+        </redirect>
+
+        <keywords>
+                <enabled>false</enabled>
+        </keywords>
+
+        <forward>
+                <enabled>false</enabled>
+        </forward>
+
+        <limits>
+                <enabled>false</enabled>
+        </limits>
+
+        <filter>
+                <enabled>false</enabled>
+        </filter>
+
+        <mime>
+                <enabled>true</enabled>
+                <policy>allow</policy>
+        </mime>
+
+        <rewrite>
+                <enabled>false</enabled>
+        </rewrite>
+</mman>

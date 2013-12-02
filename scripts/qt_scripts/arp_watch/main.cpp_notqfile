@@ -1,0 +1,82 @@
+#include <QtCore>
+#include <QCoreApplication>
+#include <QtSql>
+#include <iostream>
+#include <cstdlib>
+#include <iomanip>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+using namespace std;
+
+
+#define SQLDRIVER "QMYSQL"
+#define HOST "10.200.25.1"
+#define DBNAME "freenibs"
+#define USER "arpwatch"
+#define PASSWORD "RLMXXGpCeNw8uDva"
+
+int main(int argc, char *argv[])
+{
+    QCoreApplication a(argc, argv);
+    QTextCodec *codec = QTextCodec::codecForName("CP1251");
+    QTextCodec::setCodecForTr(codec);
+    QTextCodec::setCodecForCStrings(codec);
+    QSqlDatabase db = QSqlDatabase::addDatabase(SQLDRIVER);
+    if( !db.isDriverAvailable(SQLDRIVER))
+    {
+	exit(1);
+    }
+
+    db.setHostName(HOST);
+    db.setDatabaseName(DBNAME);
+    db.setUserName(USER);
+    db.setPassword(PASSWORD);
+    //db.setPort(3306);
+    QFile file("/arpwatch.table");
+    if (! file.exists() ){
+	exit(1);
+    }
+    if( !file.open(QIODevice::ReadOnly)){
+	exit(1);
+    }
+    bool ok=db.open();
+    if(ok!=true){
+    	std::cout<<"unable connec't";
+    	exit(1);
+    }
+
+     QString ip_argv,mac,user;
+     ip_argv=argv[1];
+     mac=argv[2];
+     
+     //qDebug()<<ip_argv;
+     
+     QSqlQuery query("SELECT `user` FROM `actions` WHERE `call_from` = '"+ip_argv+"' AND `start_time` > FROM_UNIXTIME( UNIX_TIMESTAMP( NOW( ) ) -604800 ) GROUP BY `user` LIMIT 1");
+     while (query.next()) {
+        /* QString id = query.value(5).toString();
+         QString ip = query.value(0).toString();	 
+         QString in = query.value(3).toString();	 
+         QString out = query.value(4).toString();	 
+         QString n = query.value(1).toString();	 	 
+	 bw1 =query.value(3).toInt();	 
+	 QString bw2 =query.value(3).toString();	 
+	 
+	*/
+	user = query.value(0).toString();
+	//qDebug()<<ip_argv<<" ---> "<<user;
+	}
+	//qDebug()<<ip_argv<<" ---> "<<user<<endl;
+	//qDebug()<<"SELECT `user` FROM `actions` WHERE `call_from` = '"+ip_argv+"' AND `start_time` > FROM_UNIXTIME( UNIX_TIMESTAMP( NOW( ) ) -604800 ) GROUP BY `user`";
+	query.clear();
+	query.prepare("UPDATE `freenibs`.`users` SET `freenibs`.`users`.`mac_addr` = '"+mac+"' WHERE `freenibs`.`users`.`user` ='"+user+"' LIMIT 1");
+	//QSqlQuery query1("UPDATE `freenibs`.`users` SET `freenibs`.`users`.`mac_addr` = '"+mac+"' WHERE `freenibs`.`users`.`user` ='"+user+"' LIMIT 1");
+	query.exec();
+	//query1.clear();
+	
+	
+	
+        db.close();  
+}
+
